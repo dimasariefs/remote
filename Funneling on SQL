@@ -6,6 +6,7 @@ from
   	raw
 where
 	event = 'install'
+	and platform in ('android', 'ios')
 	and time = date_trunc('month', current_timestamp at time zone 'Asia/Jakarta)
 )
 
@@ -17,13 +18,14 @@ from
   	plays
 where
 	time = date_trunc('month', current_timestamp at time zone 'Asia/Jakarta)
+	and platform in ('android', 'ios')
 )
 
 select
-  install.user_id
+  	install.user_id
 from
-  install
+  	install
 left join
-  plays 
-  on install.user_id = plays.user_id
-  and install.month = plays.month
+  	plays 
+	on install.user_id = plays.user_id
+	and install.month = plays.month
