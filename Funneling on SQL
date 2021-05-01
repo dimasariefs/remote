@@ -1,31 +1,31 @@
 with install as (
-select
+SELECT
   	user_id
     date_trunc('month', time) as month
-from
+FROM
   	raw
-where
+WHERE
 	event = 'install'
-	and platform in ('android', 'ios')
-	and time = date_trunc('month', current_timestamp at time zone 'Asia/Jakarta)
+	AND platform in ('android', 'ios')
+	AND time = date_trunc('month', current_timestamp at time zone 'Asia/Jakarta)
 )
 
 plays as (
-select distinct
+SELECT DISTINCT
   	user_id,
 	date_trunc('month', time) as month
-from
+FROM
   	plays
-where
+WHERE
 	time = date_trunc('month', current_timestamp at time zone 'Asia/Jakarta)
-	and platform in ('android', 'ios')
+	AND platform in ('android', 'ios')
 )
 
-select
+SELECT
   	install.user_id
-from
+FROM
   	install
-left join
+LEFT JOIN
   	plays 
-	on install.user_id = plays.user_id
-	and install.month = plays.month
+	ON install.user_id = plays.user_id
+	AND install.month = plays.month
